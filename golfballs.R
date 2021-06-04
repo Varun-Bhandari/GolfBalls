@@ -1,0 +1,54 @@
+setwd("")
+table1=read.csv("InternetMobileTime .csv", header=TRUE,sep=",")
+table1
+summary(table1)
+attach(table1)
+sd(Minutes)
+library(readxl)
+golfdata=read_xls("Golf.xls")
+attach(golfdata)
+summary(golfdata)
+t.test(Current,New)
+graphold=hist(Current)
+graphnew=hist(New)
+sd(Current)
+sd(New)
+boxplot(Current, horizontal=TRUE, main = 'Boxplot for Current')
+boxplot(New, horizontal=TRUE, main = 'Boxplot for New')
+golfdata
+n=40
+ll1=mean(Current)+qt(.025,df=n-1)*(sd(Current)/(n^0.5))
+ul1=mean(Current)-qt(.025,df=n-1)*(sd(Current)/(n^0.5))
+ll2=mean(New)+qt(.025,df=n-1)*(sd(New)/(n^0.5))
+ul2=mean(New)-qt(.025,df=n-1)*(sd(New)/(n^0.5))
+dof=(((((sd(Current))^2)/n)+(((sd(New))^2)/n))^2)/(((1/(n-1))*(((sd(Current))^2)/n)^2)+((1/(n-1))*(((sd(New))^2)/n)^2))
+teststat=t.test(Current,New)
+teststat
+teststat[parameter]
+teststat(parameter)
+teststat[1]
+teststat$parameter
+meandiff=mean(Current)-mean(New)
+qt(0.025,df=dof)
+co=(((sd(Current)^2)/40)+((sd(New)^2)/40))^0.5
+ll3=meandiff+qt(0.025,df=dof)*co
+ul3=meandiff-qt(0.025,df=dof)*co
+ll3
+ul3
+newfood=read.csv("paul-newfood (1).csv",header=TRUE)
+newfood
+attach(newfood)
+MyPriceLevel=as.factor(PriceLevel)
+MyAdLevel=as.factor(AdLevel)
+model1=aov(Sales~MyAdLevel,data=newfood)
+summary(model1)
+model2=aov(Sales~MyPriceLevel,data=newfood)
+summary(model2)
+model3=aov(Sales~MyAdLevel+MyPriceLevel,data=newfood)
+summary(model3)
+model4=aov(Sales~MyAdLevel+MyPriceLevel+MyPriceLevel*MyAdLevel,data=newfood)
+summary(model4)
+summary(newfood)
+model5=aov(Sales~MyPriceLevel*MyAdLevel,data=newfood)
+summary(model5)
+TukeyHSD(model5)
